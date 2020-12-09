@@ -22,7 +22,7 @@ exports.signup= (req,res, next)=>{
             }
             else{
                 return res.send({user_detail: data})
-            }
+            }book_detail
         })
     }
     catch(err){

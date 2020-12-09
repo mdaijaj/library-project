@@ -1,4 +1,4 @@
- 
+    
 const mongoose=require('mongoose');
 // const bcrypt=require('bcrypt');
 
@@ -8,7 +8,7 @@ const memberSchema = mongoose.Schema({
         require:true,
         trim: true,
         min: 3,
-        max: 20 
+        max: 20,
     },
     lastname: {
         type: String, 
@@ -17,6 +17,11 @@ const memberSchema = mongoose.Schema({
         min: 3,
         max: 20 
     }, 
+    // bookItems: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Book",
+    //     require: true
+    // }],
     description: {
         type: String, 
         require:true,

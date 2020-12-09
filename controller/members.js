@@ -1,5 +1,10 @@
 const Member=require('../models/member_schema');
+const Book=require('../models/books_schema')
 const Bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken');
+const {login_required}=require('../middleware/index');
+const { buildCheckFunction } = require('express-validator');
+const { ConnectionStates } = require('mongoose');
 
 //register member
 exports.register=(req,res,next)=>{
@@ -10,13 +15,15 @@ exports.register=(req,res,next)=>{
             contact_no, city, state, category, description
         }= req.body;
         
+        
         const member=new Member({
             firstname, lastname, email, adhar_no, 
             password: Bcrypt.hashSync(req.body.password, 10),
             father_name, dob, age, address, 
             contact_no, city, state, category, description
         })
-        console.log(member)
+        var token = jwt.sign({ user_detail: member }, process.env.JWT_SECRET, {expiresIn: 86400 }); // expires in 24 hours
+        console.log(token)
         member.save((err, data)=>{
             if(err){
                 console.log(err)
@@ -38,7 +45,7 @@ exports.register=(req,res,next)=>{
 exports.all_member= async (req,res)=>{
     try{   
         const all_data=await Member.find();
-        console.log(all_data)
+        // console.log(all_data)
         res.send(all_data)
     }
     catch(err){
@@ -118,3 +125,6 @@ exports.deleteMember= async(req,res)=>{
         console.log("err",err)
     }
 }
+
+
+

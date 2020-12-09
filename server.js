@@ -1,33 +1,23 @@
 const express=require('express')
 const app=express();
-const path=require('path')
 
 //db connect
 const connect=require('./database/db')
-connect.then((data)=>{
-    if(data){
-        console.log("db connected successfully!")
-    }
-    else{
-        console.log("unable to connect server...")
-    }
-})
     
-//middleware
-app.use(express.json());
-
 //routes
 let adminRouter=require('./routes/admin');
 let userRouter=require('./routes/users')
 let booksRouter=require('./routes/books');
 let memberRouter=require('./routes/members')
+let memberBookRouter=require('./routes/memberBook')
 
 //middleware
+app.use(express.json());    
 app.use('/', userRouter)
 app.use('/', adminRouter)
 app.use('/', booksRouter)
 app.use('/', memberRouter)
-
+app.use('/', memberBookRouter)
 
 //server port
 const port= process.env.PORT;

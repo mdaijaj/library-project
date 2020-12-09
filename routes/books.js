@@ -1,6 +1,6 @@
 const express=require('express')
 const {login_required, adminMiddelware}=require('../middleware/index');
-const {addBooks, showBooks}= require('../controller/books')
+const {addBooks, showBooks, findBookId}= require('../controller/books')
 const router=express.Router();
 
 const multer=require('multer')
@@ -19,8 +19,10 @@ const storage = multer.diskStorage({
 const upload = multer({storage})
 
 
-//only admin add product
+//only admin add produPOSTct
 router.post('/admin/addbook', login_required, adminMiddelware, upload.array('productPicture'), addBooks)
 router.get('/books/show', showBooks);
+// router.get('/books/:id', findBookId);
+
 
 module.exports=router;
