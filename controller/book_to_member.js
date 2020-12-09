@@ -11,10 +11,13 @@ exports.addtocart= async (req,res)=>{
             if(err){
                 console.log(err)
             }
+
+            //if card avaiable than book add or same book add and increment quantity.
             if(cart){
                 const booksID=req.body.bookItems.bookId
                 const isBook= cart.bookItems.find(c => c.bookId== booksID )
-                console.log("isBook", isBook)
+                
+                // update book quantity or same book
                 if(isBook){
                     CartMember.findOneAndUpdate({"memberId": req.user.user_detail._id, "bookItems.bookId": booksID}, {
                         "$set": {
@@ -32,8 +35,10 @@ exports.addtocart= async (req,res)=>{
                             res.status(200).send({message: "same book added quatity", status: data})
                         }
                     })
-                }else{
-                    // console.log({message:"card allready exits", status: cart})
+                }
+                
+                //add diffrent book into bookstore:-
+                else{
                     CartMember.findOneAndUpdate({memberId: req.user.user_detail._id}, {
                         "$push": {
                             "bookItems": req.body.bookItems
@@ -47,7 +52,7 @@ exports.addtocart= async (req,res)=>{
                     })
                 }
 
-
+            // new user created cart
             }else{
                 const cart= new CartMember({
                     memberId: req.user.user_detail._id,
@@ -58,7 +63,7 @@ exports.addtocart= async (req,res)=>{
                         console.log(err)
                     }else{
                         console.log(data)
-                        res.send({message: "cart create", status: data})
+                        res.send({message: "created cart successfully!", status: data})
                     }
                 })
             }
