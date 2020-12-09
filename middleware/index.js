@@ -10,7 +10,15 @@ exports.login_required= (req, res, next)=>{
     }else{
         res.status(403).send("authrization requied")
     }
+    // console.log(req.user, "kkssk")
     next();
+}
+
+exports.memberMiddleware= (req,res, next)=>{
+    if(req.user.user_detail.roll!=="member"){
+        return res.status(400).send({message: "Access Denied"})
+    }
+    next();login_required
 }
 
 

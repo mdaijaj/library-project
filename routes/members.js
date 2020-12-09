@@ -6,11 +6,12 @@ const router=express.Router();
 
 
 //signup page
-router.post('/user/register', login_required, validateRequest, isRequestValidated, register);
+router.post('/user/register', validateRequest, isRequestValidated, register);
 router.get('/user/all_member', login_required, all_member);
 router.get('/user/member/:id', login_required, memberidfound)
 router.get('/user/member', login_required, memberfoundName);
 router.put('/user/member/:id', login_required, updateMemberDetail);
 router.delete('/user/member/:id', deleteMember);
-    
-module.exports=router;
+
+
+module.exports=router;  

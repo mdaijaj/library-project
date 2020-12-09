@@ -1,6 +1,13 @@
 const mongoose=require('mongoose');
 
 const bookSchema = mongoose.Schema({
+    id: {
+        type: Number,
+        require: true,
+        trim: true,
+        min: 3,
+        max: 30
+    },
     subject: {
         type: String, 
         require:true,
